@@ -14,7 +14,9 @@ public class MenuActivity extends Activity{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
-		
+        
+        
+		//TESTANDO O COMITT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		Button btMapButton = (Button) findViewById(R.id.mapButton);
 		btMapButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
