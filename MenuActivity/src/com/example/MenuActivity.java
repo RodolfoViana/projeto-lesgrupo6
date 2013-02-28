@@ -16,7 +16,6 @@ public class MenuActivity extends Activity{
         setContentView(R.layout.menu);
 		
 		Button btMapButton = (Button) findViewById(R.id.mapButton);
-		
 		btMapButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 telaMapa();
@@ -24,7 +23,6 @@ public class MenuActivity extends Activity{
         });
 		
 		Button editarInfoButton = (Button) findViewById(R.id.menuEditarInfo);
-		
 		editarInfoButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 telaInfo();
