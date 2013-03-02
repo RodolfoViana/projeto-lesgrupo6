@@ -14,6 +14,8 @@ public class InformacoesActivity extends Activity{
         setContentView(R.layout.info);
         
         String dist = (String) getIntent().getSerializableExtra("distancia");
+        String combustivelPorKm = (String) getIntent().getSerializableExtra("combustivelPorKm");
+        double combustivelPorKmD = Double.parseDouble(combustivelPorKm);
         
         TextView text = (TextView) findViewById(R.id.distanciaText);
         text.setText(dist + " m");
