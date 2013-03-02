@@ -10,11 +10,17 @@ import android.widget.Button;
 
 public class MenuActivity extends Activity{
 	
+	String combustivelPorKm;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
         
+        combustivelPorKm = (String) getIntent().getSerializableExtra("combustivelPorKm");
+        if (this.combustivelPorKm == null) {
+        	combustivelPorKm = "0.0";
+        }
         
 		//TESTANDO O COMITT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		Button btMapButton = (Button) findViewById(R.id.mapButton);
@@ -34,6 +40,7 @@ public class MenuActivity extends Activity{
 	
 	private void telaMapa() {
 		Intent mapa = new Intent(this, GMapsActivity.class);
+		mapa.putExtra("combustivelPorKm", combustivelPorKm);
         startActivity(mapa);
 	}
 	

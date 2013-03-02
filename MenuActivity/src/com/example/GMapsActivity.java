@@ -27,6 +27,8 @@ public class GMapsActivity extends MapActivity {
 	private MapView mapView;
 	private AddItemizedOverlay itemizedOverlay;
 	private int contMarcador = 0;
+	String combustivelPorKm;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -35,6 +37,8 @@ public class GMapsActivity extends MapActivity {
 
 		final Drawable drawable = this.getResources().getDrawable(
 				R.drawable.ic_launcher);
+		
+		combustivelPorKm = (String) getIntent().getSerializableExtra("combustivelPorKm");
 
 		Button bt = (Button) findViewById(R.id.button1);
 		bt.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +122,7 @@ public class GMapsActivity extends MapActivity {
 	private void info() {
 		Intent info = new Intent(this, InformacoesActivity.class);
 		info.putExtra("distancia", itemizedOverlay.getDistancia());
+		info.putExtra("combustivelPorKm", combustivelPorKm);
 		startActivity(info);
 	}
 	
