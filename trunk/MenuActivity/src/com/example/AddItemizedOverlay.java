@@ -24,6 +24,7 @@ public class AddItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 	private double lat;
 	private double lon;
 	private boolean rotaCalculada = false;
+	private boolean marcarPonto;
 	String distancia;
 
 	private Context context;
@@ -32,7 +33,7 @@ public class AddItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		super(boundCenterBottom(defaultMarker));
 	}
 
-	public AddItemizedOverlay(Drawable defaultMarker, Context context) {
+	public AddItemizedOverlay(Drawable defaultMarker, Context context) {	
 		this(defaultMarker);
 		this.context = context;
 		// this.lat = 48.85827758964043;
@@ -166,65 +167,55 @@ public class AddItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 	@Override
 	public boolean onTouchEvent(MotionEvent event, MapView mapView) {
 		Local localCasa;
-
+		long aux, aux2, aux3, aux4;
+		aux = 0L;
+		aux2 = 0L;
+		aux3 = 0L;
+		aux4 = 500L;
+		
+		aux2 = event.getEventTime();
+		aux = event.getDownTime();
+		aux3 = aux2-aux;
+		
+		boolean teste = aux3 > aux4;
 		
 		if (event.getAction() == 1) {
-			GeoPoint geopoint = mapView.getProjection().fromPixels((int) event.getX(), (int) event.getY());
-
-			this.lat = geopoint.getLatitudeE6() / 1E6;
-			this.lon = geopoint.getLongitudeE6() / 1E6;
-			geopointsList.add(geopoint);
+			GeoPoint geopoint = mapView.getProjection().fromPixels((int) event.getX(), (int) event.getY()) ;
+				this.lat = geopoint.getLatitudeE6() / 1E6;
+				this.lon = geopoint.getLongitudeE6() / 1E6;
+				geopointsList.add(geopoint);
 				
-
-			//OverlayItem overlayitem = new OverlayItem(geopoint, "Hello", "Sample Overlay item");
-			//this.addOverlay(overlayitem);
-			
-//			Toast.makeText(context, "Lat: " + lat + ", Lon: " + lon,
-//					Toast.LENGTH_SHORT).show();
-//			if (geopointsList.size() > 2){
-//				localCasa = new Local(geopoint, Color.BLUE);
-//				mapView.getOverlays().add(localCasa);
-//			
-//			} else {
-//				localCasa = new Local(geopoint, Color.RED);
-//				mapView.getOverlays().add(localCasa);
-//			}
-			
-		
-			
-			
-			if (mapOverlays.size() < 2) {
-				OverlayItem overlayitem = new OverlayItem(geopoint, "Hello", "Sample Overlay item");
-				this.addOverlay(overlayitem);
-				rotaCalculada = false;
-			}
-			
-			if (mapOverlays.size() == 2){
-				GeoPoint prev = geopointsList.get(0), current = geopointsList
-						.get(1);
-				float[] results = new float[3];
-				Location.distanceBetween(prev.getLatitudeE6() / 1E6,
-						prev.getLongitudeE6() / 1E6,
-						current.getLatitudeE6() / 1E6,
-						current.getLongitudeE6() / 1E6, results);
-
-				distancia = Float.toString(results[0]);
-
-				Toast.makeText(context, distancia + " metros", Toast.LENGTH_SHORT).show();
-				if(!rotaCalculada){
-					new RotaAsyncTask(mapView).execute(
-							// Latitude, Logintude de Origem
-							prev.getLatitudeE6() / 1E6,prev.getLongitudeE6() / 1E6,  
-							// Latitude, Longitude de Destino
-							current.getLatitudeE6() / 1E6,current.getLongitudeE6() / 1E6);
-					rotaCalculada = true;
+				//Dai eu so deixo marcar se o tempo for maior que 500L
+				if (mapOverlays.size() < 2 /*&& teste eh aqui que fica o erro =\ */) {
+					OverlayItem overlayitem = new OverlayItem(geopoint, "Hello", "Sample Overlay item");
+					this.addOverlay(overlayitem);
+					rotaCalculada = false;
 					
 				}
+				if (mapOverlays.size() == 2){
+					GeoPoint prev = geopointsList.get(0), current = geopointsList
+							.get(1);
+					float[] results = new float[3];
+					Location.distanceBetween(prev.getLatitudeE6() / 1E6,
+							prev.getLongitudeE6() / 1E6,
+							current.getLatitudeE6() / 1E6,
+							current.getLongitudeE6() / 1E6, results);
 
-			}
-			
-			
-//			removerItem(mapView);
+					distancia = Float.toString(results[0]);
+
+					
+					Toast.makeText(context, distancia + " metros ", Toast.LENGTH_SHORT).show();
+					if(!rotaCalculada){
+						new RotaAsyncTask(mapView).execute(
+								// Latitude, Logintude de Origem
+								prev.getLatitudeE6() / 1E6,prev.getLongitudeE6() / 1E6,  
+								// Latitude, Longitude de Destino
+								current.getLatitudeE6() / 1E6,current.getLongitudeE6() / 1E6);
+						rotaCalculada = true;
+						
+					}
+
+				}	
 		}
 		return false;
 	}
@@ -282,5 +273,12 @@ public class AddItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		this.populate();
 		
 	}
-
+	
+	public boolean pontoMarcado(){
+		return this.marcarPonto;
+	}
+	
+	public void pontoMarcado(boolean tipo){
+		this.marcarPonto =  tipo;
+	}
 }
