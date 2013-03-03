@@ -1,5 +1,20 @@
 <resources>
 
     <string name="app_name">Mapa</string>
+    <string-array name = "lista_carros">
+        <item >Carros</item>
+        <item >Celta</item>
+        <item >Gol 1.0</item>
+        <item >Gol 1.6</item>
+        <item >Uno Mille</item>
+        <item >Novo Palio 1.0</item>
+        <item >Siena 1.4</item>
+        <item >Fox 1.0</item>
+        <item >Fox 1.6</item>
+        <item >Ford Ka</item>
+        <item >Onix</item>
+        
+        
+    </string-array>
 
 </resources>
