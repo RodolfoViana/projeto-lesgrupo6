@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class InfoCarroActivity extends Activity {
 	
-	private String combustivel = "0.0";
+	//private String combustivel = "0.0";
+	private String combustivel;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -19,7 +22,8 @@ public class InfoCarroActivity extends Activity {
         Button okButton = (Button) findViewById(R.id.carOkButton);
         okButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                menu();
+            	//verDesempenho();
+            	menu();
             }
         });
 		
@@ -34,7 +38,7 @@ public class InfoCarroActivity extends Activity {
 	
 	private void menu() {
 		Intent menu = new Intent(this, MenuActivity.class);
-		//calculaCombustivel();
+		calculaCombustivel();
 		menu.putExtra("combustivelPorKm", this.combustivel);
         startActivity(menu);
 	}
@@ -51,9 +55,11 @@ public class InfoCarroActivity extends Activity {
 		double combustivelLD = Double.parseDouble(combustivelL.getText().toString());
 		
 		double kms = (kmFinalD - kmInicialD);
-		//calculo de combustivel por km
-		//ainda nao feito corretamente
 		this.combustivel = String.valueOf((kms/combustivelLD));
+	}
+	
+	private void verDesempenho(){
+		Toast.makeText(InfoCarroActivity.this, "Desempenho do seu carro é: " + this.combustivel + "Km/l", Toast.LENGTH_LONG).show();
 	}
 
 }

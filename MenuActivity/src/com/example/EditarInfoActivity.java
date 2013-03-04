@@ -24,7 +24,7 @@ public class EditarInfoActivity extends Activity{
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.editar_info);
         
-        visuDesempenho = (TextView) findViewById(R.id.VerDesempenho);
+        //visuDesempenho = (TextView) findViewById(R.id.VerDesempenho);
         
         final Spinner spinnerCarros = (Spinner) findViewById(R.id.spinner1);
         
