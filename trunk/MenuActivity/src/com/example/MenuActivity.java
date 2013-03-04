@@ -18,9 +18,6 @@ public class MenuActivity extends Activity{
         setContentView(R.layout.menu);
         
         combustivelPorKm = (String) getIntent().getSerializableExtra("combustivelPorKm");
-        if (this.combustivelPorKm == null) {
-        	combustivelPorKm = "0.0";
-        }
         
 		//TESTANDO O COMITT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		Button btMapButton = (Button) findViewById(R.id.mapButton);
