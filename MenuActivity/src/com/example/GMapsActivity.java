@@ -4,9 +4,14 @@ import java.util.List;
 
 
 import android.R.drawable;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,8 +31,13 @@ public class GMapsActivity extends MapActivity {
 
 	private MapView mapView;
 	private AddItemizedOverlay itemizedOverlay;
+	MapController mc = mapView.getController();
 	private int contMarcador = 0;
 	String combustivelPorKm;
+	
+	//GPS
+	private LocationManager locationManager;
+	private LocationListener locationListener;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -179,7 +189,7 @@ public class GMapsActivity extends MapActivity {
 
 		List<Overlay> mapOverlays = mapView.getOverlays();
 
-		MapController mc = mapView.getController();
+		
 		double lat = itemizedOverlay.getLatitude();
 		double lon = itemizedOverlay.getLongitude();
 		GeoPoint geoPoint = new GeoPoint((int) (lat * 1E6), (int) (lon * 1E6));
@@ -187,6 +197,12 @@ public class GMapsActivity extends MapActivity {
 		mc.setZoom(15);
 		// mapView.invalidate();
 		mapView.setSatellite(true);
+		
+		
+		//GPS
+//		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//		locationListener = new NovaLocalizacao();
+//		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
 		// OverlayItem overlayitem = new OverlayItem(geoPoint, "Hello",
 		// "Sample Overlay item");
@@ -204,7 +220,34 @@ public class GMapsActivity extends MapActivity {
 //				-7.22284,-35.87790);
 	}
 	
-	private void calculaRota(){
+	class NovaLocalizacao implements LocationListener{
+
+		@Override
+		public void onLocationChanged(Location location) {
+			Log.i("onLocationChaged Rodolfo", "OnLoationChanged GPS");
+//			GeoPoint geoPoint = new GeoPoint((int) (location.getLatitude()), (int) (location.getLongitude()));
+//			mc.animateTo(geoPoint);
+//			Toast.makeText(getBaseContext(), (int) location.getLatitude(), Toast.LENGTH_LONG).show();
+			
+		}
+
+		@Override
+		public void onProviderDisabled(String provider) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onProviderEnabled(String provider) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+			// TODO Auto-generated method stub
+			
+		}
 		
 	}
 }
