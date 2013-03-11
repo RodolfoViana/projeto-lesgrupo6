@@ -3,6 +3,7 @@ package com.example;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -201,8 +202,8 @@ public class AddItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 							current.getLatitudeE6() / 1E6,
 							current.getLongitudeE6() / 1E6, results);
 
-					distancia = Float.toString(results[0]);
-
+					//distancia = Float.toString(results[0]);
+					distancia = format(results[0]);
 					
 					Toast.makeText(context, distancia + " metros ", Toast.LENGTH_SHORT).show();
 					if(!rotaCalculada){
@@ -280,5 +281,10 @@ public class AddItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 	
 	public void pontoMarcado(boolean tipo){
 		this.marcarPonto =  tipo;
+	}
+	
+	@SuppressLint("DefaultLocale")
+	private String format(double numero) {
+		return String.format("%.3f", numero);
 	}
 }

@@ -1,5 +1,6 @@
 package com.example;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,10 +18,14 @@ public class InformacoesActivity extends Activity{
         String combustivelPorKm = (String) getIntent().getSerializableExtra("combustivelPorKm");
         
         TextView text = (TextView) findViewById(R.id.distanciaText);
+        TextView text2 = (TextView) findViewById(R.id.complementarTextInfo);
+        
         if (dist == null) {
-        	text.setText(" ");
+        	text.setText("Pontos não marcados");
+        	text2.setText(" ");
         } else {
-        	text.setText(dist + " m");
+        	text.setText(format(dist) + " m");
+        	text2.setText("ou");
         }
         
         TextView distEmKm = (TextView) findViewById(R.id.textDistEmKm);
@@ -29,7 +34,7 @@ public class InformacoesActivity extends Activity{
         
         TextView textDesempenho = (TextView) findViewById(R.id.textDesempenhoCarro);
         if (combustivelPorKm == null) {
-        	textDesempenho.setText(" ");
+        	textDesempenho.setText("Modelo de carro não selecionado");
         } else {
         	textDesempenho.setText(combustivelPorKm + " km/l");
         }
@@ -51,7 +56,8 @@ public class InformacoesActivity extends Activity{
 			return "";
 		}
 		double dist = Double.parseDouble(distancia);
-		return (String.valueOf(dist/1000) + " km");
+		return format(dist/1000) + " km";
+		//return (String.valueOf(dist/1000) + " km");
 	}
 	
 	private String calcularCombustivelNecessário(String combustivel, String distancia) {
@@ -63,7 +69,18 @@ public class InformacoesActivity extends Activity{
 		double kmPorLitro = Double.parseDouble(combustivel);
 		double distEmKm = dist/1000;
 		
-		return (String.valueOf(distEmKm/kmPorLitro) + " l");
+		return format(distEmKm/kmPorLitro) + " l";
+		//return (String.valueOf(distEmKm/kmPorLitro) + " l");
+	}
+	
+	@SuppressLint("DefaultLocale")
+	private String format(double numero) {
+		return String.format("%.3f", numero);
+	}
+	
+	@SuppressLint("DefaultLocale")
+	private String format(String numero) {
+		return String.format("%.3f", Double.parseDouble(numero));
 	}
 	
 }

@@ -29,16 +29,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Button
-        android:id="@+id/cancelarListaButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/button1"
-        android:layout_alignRight="@+id/listView1"
-        android:layout_marginRight="28dp"
-        android:text="Cancelar" />
-
-    <Button
-        android:id="@+id/button1"
+        android:id="@+id/okBtLista"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/listView1"
@@ -46,5 +37,15 @@
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="25dp"
         android:text="      Ok      " />
+
+    <Button
+        android:id="@+id/cancelarListaButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/okBtLista"
+        android:layout_alignBottom="@+id/okBtLista"
+        android:layout_alignRight="@+id/listView1"
+        android:layout_marginRight="30dp"
+        android:text="Cancelar" />
 
 </RelativeLayout>

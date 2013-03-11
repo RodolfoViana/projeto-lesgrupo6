@@ -4,26 +4,28 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 public class InfoCarroActivity extends Activity {
 	
-	//private String combustivel = "0.0";
 	private String combustivel;
+	EditText modeloText;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.info_carro);
         
+        modeloText = (EditText) findViewById(R.id.editText1);
+        
         Button okButton = (Button) findViewById(R.id.carOkButton);
         okButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-            	//verDesempenho();
-            	menu();
+            	if (validaCamposDeTexto() == true) {
+            		spinner();
+            	}
             }
         });
 		
@@ -36,16 +38,34 @@ public class InfoCarroActivity extends Activity {
 		
 	}
 	
-	private void menu() {
-		Intent menu = new Intent(this, MenuActivity.class);
-		calculaCombustivel();
-		menu.putExtra("combustivelPorKm", this.combustivel);
+	private void spinner() {
+		Intent menu = new Intent(this, EditarInfoActivity.class);		
+		calculaCombustivel();	
+		menu.putExtra("modeloCarro", String.valueOf(modeloText.getText().toString()));
+		menu.putExtra("desempenho", this.combustivel);
         startActivity(menu);
 	}
 	
+	private boolean validaCamposDeTexto() {
+		EditText modeloText = (EditText) findViewById(R.id.editText1);
+		EditText tipoCombustivel = (EditText) findViewById(R.id.editText2);
+		EditText kmInicial = (EditText) findViewById(R.id.editText3);
+		EditText kmFinal = (EditText) findViewById(R.id.editText4);
+		EditText combustivelL = (EditText) findViewById(R.id.editText5);
+		
+		if ((modeloText.getText().toString().equals(null)) || (tipoCombustivel.getText().toString().equals(null)) || (kmInicial.getText().toString().equals(null)) || (kmFinal.getText().toString().equals(null)) || (combustivelL.getText().toString().equals(null))) {
+			Toast.makeText(InfoCarroActivity.this, "Todos os campos devem ser preenchidos.", Toast.LENGTH_LONG).show();
+			return false;
+		}
+		if ((modeloText.getText().toString().equals("")) || (tipoCombustivel.getText().toString().equals("")) || (kmInicial.getText().toString().equals("")) || (kmFinal.getText().toString().equals("")) || (combustivelL.getText().toString().equals(""))) {
+			Toast.makeText(InfoCarroActivity.this, "Todos os campos devem ser preenchidos.", Toast.LENGTH_LONG).show();
+			return false;
+		}
+		return true;
+	}
+	
 	private void calculaCombustivel() {
-		//EditText modeloText = (EditText) findViewById(R.id.editText1);
-		//EditText tipoCombustivel = (EditText) findViewById(R.id.editText2);
+		
 		EditText kmInicial = (EditText) findViewById(R.id.editText3);
 		EditText kmFinal = (EditText) findViewById(R.id.editText4);
 		EditText combustivelL = (EditText) findViewById(R.id.editText5);
@@ -57,9 +77,4 @@ public class InfoCarroActivity extends Activity {
 		double kms = (kmFinalD - kmInicialD);
 		this.combustivel = String.valueOf((kms/combustivelLD));
 	}
-	
-	private void verDesempenho(){
-		Toast.makeText(InfoCarroActivity.this, "Desempenho do seu carro é: " + this.combustivel + "Km/l", Toast.LENGTH_LONG).show();
-	}
-
 }

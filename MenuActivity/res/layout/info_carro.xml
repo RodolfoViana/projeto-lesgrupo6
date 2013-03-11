@@ -111,15 +111,6 @@
         android:inputType="numberDecimal" />
 
     <Button
-        android:id="@+id/button3"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/editText1"
-        android:layout_alignParentRight="true"
-        android:text="Dica" />
-
-    <Button
         android:id="@+id/carOkButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
