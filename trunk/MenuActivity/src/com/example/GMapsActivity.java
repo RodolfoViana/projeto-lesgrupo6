@@ -31,7 +31,7 @@ public class GMapsActivity extends MapActivity {
 
 	private MapView mapView;
 	private AddItemizedOverlay itemizedOverlay;
-	MapController mc = mapView.getController();
+	//MapController mc = mapView.getController();
 	private int contMarcador = 0;
 	String combustivelPorKm;
 	
@@ -189,6 +189,7 @@ public class GMapsActivity extends MapActivity {
 
 		List<Overlay> mapOverlays = mapView.getOverlays();
 
+		MapController mc = mapView.getController();
 		
 		double lat = itemizedOverlay.getLatitude();
 		double lon = itemizedOverlay.getLongitude();
@@ -220,6 +221,7 @@ public class GMapsActivity extends MapActivity {
 //				-7.22284,-35.87790);
 	}
 	
+	
 	class NovaLocalizacao implements LocationListener{
 
 		@Override
@@ -250,4 +252,5 @@ public class GMapsActivity extends MapActivity {
 		}
 		
 	}
+	
 }
