@@ -202,8 +202,8 @@ public class AddItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 							current.getLatitudeE6() / 1E6,
 							current.getLongitudeE6() / 1E6, results);
 
-					//distancia = Float.toString(results[0]);
-					distancia = format(results[0]);
+					distancia = Float.toString(results[0]);
+					//distancia = format(results[0]);
 					
 					Toast.makeText(context, distancia + " metros ", Toast.LENGTH_SHORT).show();
 					if(!rotaCalculada){
