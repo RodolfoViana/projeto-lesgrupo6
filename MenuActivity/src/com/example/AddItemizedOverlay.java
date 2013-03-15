@@ -205,7 +205,14 @@ public class AddItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 					distancia = Float.toString(results[0]);
 					//distancia = format(results[0]);
 					
-					Toast.makeText(context, distancia + " metros ", Toast.LENGTH_SHORT).show();
+					if (results[0] >= 1000){
+						Toast.makeText(context, results[0]/1000 + " Kilometros ", Toast.LENGTH_SHORT).show();
+					}
+					else if(results[0] < 1000) {
+						
+						Toast.makeText(context, distancia + " metros ", Toast.LENGTH_SHORT).show();
+					}
+					
 					if(!rotaCalculada){
 						new RotaAsyncTask(mapView).execute(
 								// Latitude, Logintude de Origem
