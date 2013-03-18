@@ -1,15 +1,12 @@
 package com.example;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
-import android.util.Log;
+import android.os.Vibrator;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
@@ -17,6 +14,7 @@ import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayItem;
+
 
 public class AddItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 
@@ -26,15 +24,15 @@ public class AddItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 	private double lon;
 	private boolean rotaCalculada = false;
 	private boolean marcarPonto;
-	String distancia;
-
+	private String distancia;
+	private Vibrator vibe;
 	private Context context;
 
 	public AddItemizedOverlay(Drawable defaultMarker) {
 		super(boundCenterBottom(defaultMarker));
 	}
 
-	public AddItemizedOverlay(Drawable defaultMarker, Context context) {	
+	public AddItemizedOverlay(Drawable defaultMarker, Context context, Vibrator vibe) {	
 		this(defaultMarker);
 		this.context = context;
 		// this.lat = 48.85827758964043;
@@ -42,7 +40,9 @@ public class AddItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		this.lat = -7.230556;
 		this.lon = -35.881111;
 		this.geopointsList = new ArrayList<GeoPoint>();
+		this.vibe = vibe;
 	}
+	
 
 	// public AddItemizedOverlay(MotionEvent) {
 	//
@@ -157,11 +157,7 @@ public class AddItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 				
 				mapOverlays.remove(i);
 			//	this.populate();
-				
-				
-
 			//}
-			
 		}
 	}
 	
@@ -172,30 +168,31 @@ public class AddItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		aux = 0L;
 		aux2 = 0L;
 		aux3 = 0L;
-		aux4 = 500L;
-		
+		aux4 = 550L;
+
 		aux2 = event.getEventTime();
 		aux = event.getDownTime();
-		aux3 = aux2-aux;
-		
+		aux3 = aux2 - aux;
+
 		boolean teste = aux3 > aux4;
 		
 		if (event.getAction() == 1) {
-			GeoPoint geopoint = mapView.getProjection().fromPixels((int) event.getX(), (int) event.getY()) ;
+			if (teste) {
+				vibe.vibrate(50);
+				GeoPoint geopoint = mapView.getProjection().fromPixels((int) event.getX(), (int) event.getY());
 				this.lat = geopoint.getLatitudeE6() / 1E6;
 				this.lon = geopoint.getLongitudeE6() / 1E6;
 				geopointsList.add(geopoint);
-				
-				//Dai eu so deixo marcar se o tempo for maior que 500L
-				if (mapOverlays.size() < 2 /*&& teste eh aqui que fica o erro =\ */) {
-					OverlayItem overlayitem = new OverlayItem(geopoint, "Hello", "Sample Overlay item");
+
+				// Dai eu so deixo marcar se o tempo for maior que 500L
+				if (mapOverlays.size() < 2 /* && teste eh aqui que fica o erro =\ */) {
+					OverlayItem overlayitem = new OverlayItem(geopoint,"Hello", "Sample Overlay item");
 					this.addOverlay(overlayitem);
 					rotaCalculada = false;
-					
 				}
-				if (mapOverlays.size() == 2){
-					GeoPoint prev = geopointsList.get(0), current = geopointsList
-							.get(1);
+				
+				if (mapOverlays.size() == 2) {
+					GeoPoint prev = geopointsList.get(0), current = geopointsList.get(1);
 					float[] results = new float[3];
 					Location.distanceBetween(prev.getLatitudeE6() / 1E6,
 							prev.getLongitudeE6() / 1E6,
@@ -203,29 +200,35 @@ public class AddItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 							current.getLongitudeE6() / 1E6, results);
 
 					distancia = Float.toString(results[0]);
-					//distancia = format(results[0]);
-					
-					if (results[0] >= 1000){
-						Toast.makeText(context, results[0]/1000 + " Kilometros ", Toast.LENGTH_SHORT).show();
-					}
-					else if(results[0] < 1000) {
-						
+					// distancia = format(results[0]);
+
+					if (results[0] >= 1000) {
+						Toast.makeText(context,results[0] / 1000 + " Kilometros ",Toast.LENGTH_SHORT).show();
+					} else if (results[0] < 1000) {
+
 						Toast.makeText(context, distancia + " metros ", Toast.LENGTH_SHORT).show();
 					}
-					
-					if(!rotaCalculada){
+
+					if (!rotaCalculada) {
 						new RotaAsyncTask(mapView).execute(
 								// Latitude, Logintude de Origem
-								prev.getLatitudeE6() / 1E6,prev.getLongitudeE6() / 1E6,  
+								prev.getLatitudeE6() / 1E6,
+								prev.getLongitudeE6() / 1E6,
 								// Latitude, Longitude de Destino
-								current.getLatitudeE6() / 1E6,current.getLongitudeE6() / 1E6);
+								current.getLatitudeE6() / 1E6,
+								current.getLongitudeE6() / 1E6);
 						rotaCalculada = true;
-						
+
 					}
 
-				}	
+				}
+				return true;
+			}
+			return true;
+			
+		} else {
+			return false;
 		}
-		return false;
 	}
 	
 	public String getDistancia() {

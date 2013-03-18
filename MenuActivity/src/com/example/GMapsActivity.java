@@ -3,7 +3,6 @@ package com.example;
 import java.util.List;
 
 
-import android.R.drawable;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -11,13 +10,13 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
@@ -25,15 +24,15 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
-import com.google.android.maps.OverlayItem;
 
 public class GMapsActivity extends MapActivity {
 
 	private MapView mapView;
+	private int contMarcador = 0;
+	private String combustivelPorKm;
+	private Vibrator vibe;
 	private AddItemizedOverlay itemizedOverlay;
 	//MapController mc = mapView.getController();
-	private int contMarcador = 0;
-	String combustivelPorKm;
 	
 	//GPS
 	private LocationManager locationManager;
@@ -44,6 +43,8 @@ public class GMapsActivity extends MapActivity {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		
+		vibe = (Vibrator) GMapsActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
 
 		final Drawable drawable = this.getResources().getDrawable(
 				R.drawable.ic_launcher);
@@ -77,7 +78,6 @@ public class GMapsActivity extends MapActivity {
 			
 			@Override
 			public void onClick(View arg0) {
-				//itemizedOverlay.onTouchEvent(event, mapView);
 				finish();
 			}
 		});
@@ -185,7 +185,8 @@ public class GMapsActivity extends MapActivity {
 		mapView.setStreetView(true); // Street View
 		mapView.setTraffic(true); // Traffic View
 
-		itemizedOverlay = new AddItemizedOverlay(drawable, this);
+		//itemizedOverlay = new AddItemizedOverlay(drawable, this);
+		itemizedOverlay = new AddItemizedOverlay(drawable, this, vibe);
 
 		List<Overlay> mapOverlays = mapView.getOverlays();
 
