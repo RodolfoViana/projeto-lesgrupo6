@@ -18,14 +18,14 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView4"
-        android:layout_below="@+id/textView4"
+        android:layout_alignLeft="@+id/textGastoDeCombustivel"
+        android:layout_below="@+id/textGastoDeCombustivel"
         android:layout_marginTop="42dp"
         android:text="Km Final:"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/textGastoDeCombustivel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView3"
@@ -55,7 +55,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/editTextValorComb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textView1"
@@ -74,7 +74,7 @@
         android:layout_alignBaseline="@+id/textView2"
         android:layout_alignBottom="@+id/textView2"
         android:layout_alignLeft="@+id/editText2"
-        android:layout_alignRight="@+id/editText1"
+        android:layout_alignRight="@+id/editTextValorComb"
         android:ems="10"
         android:inputType="numberDecimal" />
 
@@ -93,9 +93,9 @@
         android:id="@+id/editText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView4"
-        android:layout_alignBottom="@+id/textView4"
-        android:layout_alignLeft="@+id/editText1"
+        android:layout_alignBaseline="@+id/textGastoDeCombustivel"
+        android:layout_alignBottom="@+id/textGastoDeCombustivel"
+        android:layout_alignLeft="@+id/editTextValorComb"
         android:layout_alignRight="@+id/carroCancelButton"
         android:ems="10" />
 
