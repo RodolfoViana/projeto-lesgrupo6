@@ -13,12 +13,13 @@ public class InfoCarroActivity extends Activity {
 	private String combustivel;
 	EditText modeloText;
 	
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.info_carro);
         
-        modeloText = (EditText) findViewById(R.id.editText1);
+        //modeloText = (EditText) findViewById(R.id.editTextValorComb);
         
         Button okButton = (Button) findViewById(R.id.carOkButton);
         okButton.setOnClickListener(new View.OnClickListener() {
@@ -47,11 +48,12 @@ public class InfoCarroActivity extends Activity {
 	}
 	
 	private boolean validaCamposDeTexto() {
-		EditText modeloText = (EditText) findViewById(R.id.editText1);
+		EditText modeloText = (EditText) findViewById(R.id.editTextValorComb);
 		EditText tipoCombustivel = (EditText) findViewById(R.id.editText2);
 		EditText kmInicial = (EditText) findViewById(R.id.editText3);
 		EditText kmFinal = (EditText) findViewById(R.id.editText4);
 		EditText combustivelL = (EditText) findViewById(R.id.editText5);
+		
 		
 		if ((modeloText.getText().toString().equals(null)) || (tipoCombustivel.getText().toString().equals(null)) || (kmInicial.getText().toString().equals(null)) || (kmFinal.getText().toString().equals(null)) || (combustivelL.getText().toString().equals(null))) {
 			Toast.makeText(InfoCarroActivity.this, "Todos os campos devem ser preenchidos.", Toast.LENGTH_LONG).show();
@@ -74,7 +76,10 @@ public class InfoCarroActivity extends Activity {
 		double kmInicialD = Double.parseDouble(kmInicial.getText().toString());
 		double combustivelLD = Double.parseDouble(combustivelL.getText().toString());
 		
+		
 		double kms = (kmFinalD - kmInicialD);
 		this.combustivel = String.valueOf((kms/combustivelLD));
 	}
+	
+	
 }
