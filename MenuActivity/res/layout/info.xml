@@ -86,4 +86,23 @@
         android:layout_toRightOf="@+id/infoBackButton"
         android:text="ou" />
 
+    <TextView
+        android:id="@+id/textGastoDeCombustivel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="33dp"
+        android:text="Valor gasto em R$:"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/valorGastoDeCombustivel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textGastoDeCombustivel"
+        android:layout_alignBottom="@+id/textGastoDeCombustivel"
+        android:layout_toRightOf="@+id/infoBackButton"
+        android:text="TextView" />
+
 </RelativeLayout>
