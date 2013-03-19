@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -23,11 +24,16 @@ public class EditarInfoActivity extends Activity{
 	private List<Double> desempenhoList;
 	private Spinner spinnerCarros;
 	private int checkedItem;
+	private static double valorCombustivelLD = 0.0;
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        setContentView(R.layout.editar_info);        
+        setContentView(R.layout.editar_info);
+        
+        
+        
 
         combustivelPorKm = (String) getIntent().getSerializableExtra("desempenho");
         modelo = (String) getIntent().getSerializableExtra("modeloCarro");
@@ -126,6 +132,11 @@ public class EditarInfoActivity extends Activity{
 		Button okBt = (Button) findViewById(R.id.editarInfoOkButton);
 		okBt.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+            	
+            	EditText valorCombustivelL = (EditText) findViewById(R.id.editTextValorComb);
+            	valorCombustivelLD = Double.parseDouble(valorCombustivelL.getText().toString());
+        		
+            	
             	menuPrincipal();
             }
         });
@@ -202,4 +213,10 @@ public class EditarInfoActivity extends Activity{
         	this.desempenhoList.add(Double.parseDouble(combustivelPorKm));
         }
 	}
+	
+	public static double getValorCombustivel(){
+		return valorCombustivelLD;
+	}
+	
+	
 }
