@@ -27,12 +27,12 @@
      android:text="Apagar Pontos" />
  
  <Button
-     android:id="@+id/voltarButton"
+     android:id="@+id/salvaButton"
      android:layout_width="wrap_content"
      android:layout_height="wrap_content"
      android:layout_alignParentLeft="true"
      android:layout_alignParentTop="true"
-     android:text="      Voltar        " />
+     android:text="    Salvar      " />
 
  <Button
      android:id="@+id/infoButton"
@@ -42,5 +42,13 @@
      android:layout_toLeftOf="@+id/button1"
      android:layout_toRightOf="@+id/voltarButton"
      android:text="Informações" />
+
+ <Button
+     android:id="@+id/mostrarPontos"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_alignParentRight="true"
+     android:layout_below="@+id/button1"
+     android:text="   Pontos   " />
 
 </RelativeLayout>
