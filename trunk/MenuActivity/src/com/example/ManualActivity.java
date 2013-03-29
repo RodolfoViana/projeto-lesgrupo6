@@ -23,7 +23,6 @@ public class ManualActivity extends Activity {
 			
 			@Override
 			public void onClick(View arg0) {
-				//itemizedOverlay.onTouchEvent(event, mapView);
 				finish();
 			}
 		});
