@@ -1,5 +1,6 @@
 package com.example;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -17,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
@@ -24,6 +26,7 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
+import com.google.android.maps.OverlayItem;
 
 public class GMapsActivity extends MapActivity {
 
@@ -32,6 +35,10 @@ public class GMapsActivity extends MapActivity {
 	private String combustivelPorKm;
 	private Vibrator vibe;
 	private AddItemizedOverlay itemizedOverlay;
+	TextView txtLatitude;
+	TextView txtLongitude;
+	String pontosSalvos = "";
+	private ArrayList<GeoPoint> geopointsList = new ArrayList<GeoPoint>();
 	//MapController mc = mapView.getController();
 	
 	//GPS
@@ -56,29 +63,18 @@ public class GMapsActivity extends MapActivity {
 
 			@Override
 			public void onClick(View arg0) {
-//				// itemizedOverlay = new AddItemizedOverlay(drawable,
-//				// GMapsActivity.this);
-//
-//				mapView.getOverlays().clear();
-//				mapView.invalidate();
-//				// mapView.getOverlays().notify();
-//				mapView.setClickable(true);
-//				// mapView.getOverlays().add(itemizedOverlay);
-//				// mapView.;
-
-//				itemizedOverlay.removerOverlay();
-//				mapOverlays = mapView.getOverlays()
-//				finish();
 				telaMapa(drawable);
 			}
 		});
 		
-		Button backButton = (Button) findViewById(R.id.voltarButton);
-		backButton.setOnClickListener(new View.OnClickListener() {
+		Button salvarPontos = (Button) findViewById(R.id.salvaButton);
+		salvarPontos.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
-				finish();
+				geopointsList.addAll(itemizedOverlay.getGeopointList());
+				Toast.makeText(GMapsActivity.this, "Ponto salvo com sucesso",Toast.LENGTH_SHORT).show();
+				telaMapa(drawable);
 			}
 		});
 		
@@ -91,31 +87,14 @@ public class GMapsActivity extends MapActivity {
 			}
 		});
 		
-//		mapView = (MapView) findViewById(R.id.map_view);
-//		mapView.setBuiltInZoomControls(true);
-//		mapView.setSatellite(true); // Satellite View
-//		mapView.setStreetView(true); // Street View
-//		mapView.setTraffic(true); // Traffic View
-//
-//		itemizedOverlay = new AddItemizedOverlay(drawable, this);
-//
-//		List<Overlay> mapOverlays = mapView.getOverlays();
-//
-//		MapController mc = mapView.getController();
-//		double lat = itemizedOverlay.getLatitude();
-//		double lon = itemizedOverlay.getLongitude();
-//		GeoPoint geoPoint = new GeoPoint((int) (lat * 1E6), (int) (lon * 1E6));
-//		mc.animateTo(geoPoint);
-//		mc.setZoom(15);
-//		// mapView.invalidate();
-//		mapView.setSatellite(true);
-//
-//		// OverlayItem overlayitem = new OverlayItem(geoPoint, "Hello",
-//		// "Sample Overlay item");
-//		//
-//		// itemizedOverlay.addOverlay(overlayitem);
-//
-//		mapOverlays.add(itemizedOverlay);
+		Button mostarPontosButton = (Button) findViewById(R.id.mostrarPontos);
+		mostarPontosButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				mostrarPontos(pontosSalvos);
+			}
+		});
 		
 		telaMapa(drawable);
 	}
@@ -136,6 +115,19 @@ public class GMapsActivity extends MapActivity {
 		startActivity(info);
 	}
 	
+	private void mostrarPontos(String pontosSalvos) {
+		Intent ponto = new Intent(this, PontosActivity.class);
+		if (geopointsList.size() != 0){
+			
+			for (int i = 0; i < geopointsList.size(); i++){
+				pontosSalvos += geopointsList.get(i).toString() + "\t";
+			}
+		}
+		this.pontosSalvos = pontosSalvos;
+		ponto.putExtra("mostrarPontos", pontosSalvos);
+		startActivity(ponto);
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater menuInflater = getMenuInflater();
@@ -143,7 +135,6 @@ public class GMapsActivity extends MapActivity {
 		return true;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
@@ -171,10 +162,6 @@ public class GMapsActivity extends MapActivity {
 		}
 	}
 
-	// public void apagarPontosOnClick(View view) {
-	// Toast.makeText(this, "apagar pontos", Toast.LENGTH_SHORT).show();
-	// //itemizedOverlay.apagarPontos(mapView);
-	// }
 
 	public void telaMapa(Drawable drawable) {
 		mapView = (MapView) findViewById(R.id.map_view);
@@ -202,25 +189,24 @@ public class GMapsActivity extends MapActivity {
 		
 		
 		//GPS
-//		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//		locationListener = new NovaLocalizacao();
-//		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-
-		// OverlayItem overlayitem = new OverlayItem(geoPoint, "Hello",
-		// "Sample Overlay item");
-		//
-		// itemizedOverlay.addOverlay(overlayitem);
+		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		locationListener = new NovaLocalizacao();
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
 		mapOverlays.add(itemizedOverlay);
 		if(contMarcador<3){			
 			contMarcador += 1;
 		}
-//		new RotaAsyncTask(mapView).execute(
-//				// Latitude, Logintude de Origem
-//				-7.22274,-35.91235,  
-//				// Latitude, Longitude de Destino
-//				-7.22284,-35.87790);
 	}
+	
+	 public void Atualizar(Location location)
+	    {
+	    	Double latPoint = location.getLatitude();
+	    	Double lngPoint = location.getLongitude();
+	        
+	        txtLatitude.setText(latPoint.toString());
+	        txtLongitude.setText(lngPoint.toString());
+	    }
 	
 	
 	class NovaLocalizacao implements LocationListener{
@@ -228,10 +214,6 @@ public class GMapsActivity extends MapActivity {
 		@Override
 		public void onLocationChanged(Location location) {
 			Log.i("onLocationChaged Rodolfo", "OnLoationChanged GPS");
-//			GeoPoint geoPoint = new GeoPoint((int) (location.getLatitude()), (int) (location.getLongitude()));
-//			mc.animateTo(geoPoint);
-//			Toast.makeText(getBaseContext(), (int) location.getLatitude(), Toast.LENGTH_LONG).show();
-			
 		}
 
 		@Override

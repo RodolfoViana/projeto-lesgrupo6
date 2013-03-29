@@ -18,8 +18,7 @@ public class InfoCarroActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.info_carro);
-        
-        //modeloText = (EditText) findViewById(R.id.editTextValorComb);
+
         
         Button okButton = (Button) findViewById(R.id.carOkButton);
         okButton.setOnClickListener(new View.OnClickListener() {

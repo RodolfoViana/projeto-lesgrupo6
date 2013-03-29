@@ -17,17 +17,13 @@ public class InformacoesActivity extends Activity{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.info);
-        
-        
-        
+
         String dist = (String) getIntent().getSerializableExtra("distancia");
         String combustivelPorKm = (String) getIntent().getSerializableExtra("combustivelPorKm");
         
         TextView text = (TextView) findViewById(R.id.distanciaText);
         TextView text2 = (TextView) findViewById(R.id.complementarTextInfo);
-        
-        
-        
+  
         if (dist == null) {
         	text.setText("Pontos não marcados");
         	text2.setText(" ");

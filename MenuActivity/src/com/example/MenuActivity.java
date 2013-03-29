@@ -49,11 +49,6 @@ public class MenuActivity extends Activity{
                 telaInfo();
             }
         });
-		
-		
-		
-		
-		
 	}
 	
 	private void telaMapa() {
@@ -67,17 +62,7 @@ public class MenuActivity extends Activity{
         startActivity(info);
 	}
 	
-	private void telaManual() {
-		
-		//setContentView(R.layout.manual);
-		
-        
-//      TextView txtManual = (TextView) findViewById(R.id.textManual2);
-//      txtManual.setText("ATUALIZAR INFORMAÇÔES DO MANUAL");
-//      
-      
-      
-		
+	private void telaManual() {	
 		Intent i = new Intent(this, ManualActivity.class);
         startActivity(i);
 	}

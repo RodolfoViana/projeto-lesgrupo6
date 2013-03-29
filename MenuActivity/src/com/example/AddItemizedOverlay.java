@@ -35,18 +35,11 @@ public class AddItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 	public AddItemizedOverlay(Drawable defaultMarker, Context context, Vibrator vibe) {	
 		this(defaultMarker);
 		this.context = context;
-		// this.lat = 48.85827758964043;
-		// this.lon = 2.294543981552124;
 		this.lat = -7.230556;
 		this.lon = -35.881111;
 		this.geopointsList = new ArrayList<GeoPoint>();
 		this.vibe = vibe;
 	}
-	
-
-	// public AddItemizedOverlay(MotionEvent) {
-	//
-	// }
 
 	public double getLatitude() {
 		return lat;
@@ -62,108 +55,16 @@ public class AddItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 
 	public void apagarPontos() {
 		 mapOverlays = new ArrayList<OverlayItem>();
-	//	geopointsList = new ArrayList<GeoPoint>();
-		//this.populate();
-		// geopointsList = new ArrayList<GeoPoint>();
 	}
-
-//	@Override
-//	public boolean onTap(int index) {
-//		super.onTap(4);
-	//	if(index >= 0 || mapOverlays.size()  < index ){
-			
-		//	OverlayItem itemClicked = mapOverlays.get(index);
-//			AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-//			dialog.setTitle(itemClicked.getTitle());
-//			dialog.setMessage(itemClicked.getSnippet());
-//			dialog.show();
-	//	}
-//		return false;
-//		super.on
-//		final OverlayItem item = mapOverlays.remove(index);
-//		mapOverlays.
-//		AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-//
-//		dialog.setTitle("apagar");
-//		dialog.setMessage("Marcador removido com sucesso !!!");
-//
-//		dialog.show();
-//		return true;
-	//}
-	
-//	@Override
-//	public boolean onTap (final GeoPoint p, final MapView mapView){
-//	    boolean tapped = super.onTap(p, mapView);
-//	    if (tapped){            
-//   
-//			AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-//	    	
-//	    			dialog.setTitle("apagar");
-//	    			dialog.setMessage("Marcador removido com sucesso !!!");
-//	    }           
-//	    else{
-//	        //do what you want to do when you DON'T hit an item
-//	        }                   
-//	    return true;
-//	}
-
-	/*@Override
-	public boolean onTouchEvent(MotionEvent event, MapView mapView) {
-		Local localCasa;
-
-		if (event.getAction() == 1) {
-			GeoPoint geopoint = mapView.getProjection().fromPixels(
-					(int) event.getX(), (int) event.getY());
-			this.lat = geopoint.getLatitudeE6() / 1E6;
-			this.lon = geopoint.getLongitudeE6() / 1E6;
-			geopointsList.add(geopoint);
-
-			if (geopointsList.size() <= 2) {
-				localCasa = new Local(geopoint, Color.RED);
-				OverlayItem overlayitem = new OverlayItem(geopoint, "Hello",
-						"Sample Overlay item");
-				this.addOverlay(overlayitem);
-				// mapView.getOverlays().add(localCasa);
-			}
-
-			if (geopointsList.size() == 2) {
-				// String teste =
-				// distancia((geopointsList.get(0).getLatitudeE6()*1.0) * 1E6,
-				// (geopointsList.get(1).getLatitudeE6()*1.0) * 1E6,
-				// (geopointsList.get(1).getLongitudeE6()*1.0) * 1E6,
-				// (geopointsList.get(1).getLongitudeE6()*1.0) *
-				// 1E6).toString();
-
-				GeoPoint prev = geopointsList.get(0), current = geopointsList
-						.get(1);
-				float[] results = new float[3];
-				Location.distanceBetween(prev.getLatitudeE6() / 1E6,
-						prev.getLongitudeE6() / 1E6,
-						current.getLatitudeE6() / 1E6,
-						current.getLongitudeE6() / 1E6, results);
-
-				String distancia = Float.toString(results[0]);
-
-				Toast.makeText(context, distancia, Toast.LENGTH_SHORT).show();
-			}
-
-		}
-		return false;
-	}*/
 	
 	public void removerItem(MapView v){
 		for(int i = 0; i < mapOverlays.size();i++){
-			//if (super.onTap(mapOverlays.get(i).getPoint(),v)){
-				
-				mapOverlays.remove(i);
-			//	this.populate();
-			//}
+			mapOverlays.remove(i);
 		}
 	}
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event, MapView mapView) {
-		Local localCasa;
 		long aux, aux2, aux3, aux4;
 		aux = 0L;
 		aux2 = 0L;
@@ -244,12 +145,6 @@ public class AddItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 	public int size() {
 		return mapOverlays.size();
 	}
-
-//	@Override
-//	protected boolean onTap(int index) {
-//		Log.e("Tap", "Tap Performed");
-//		return true;
-//	}
 
 	public void addOverlay(OverlayItem overlay) {
 		mapOverlays.add(overlay);
