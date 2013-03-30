@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fundo2" >
+    
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="48dp"
+        android:textSize="25dp"
+        android:text="Distância Entre Pontos:" />
+
+    <TextView
+        android:id="@+id/distanciaText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView1"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_marginLeft="17dp"
+        android:layout_toRightOf="@+id/textView1"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="29dp"
+        android:textSize="25dp"
+        android:text="Combustível necessário:" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textDistEmKm"
+        android:layout_marginTop="30dp"
+        android:layout_toLeftOf="@+id/distanciaText"
+        android:textSize="25dp"
+        android:text="Desempenho do Carro:" />
+
+    <TextView
+        android:id="@+id/textDistEmKm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textDesempenhoCarro"
+        android:layout_below="@+id/complementarTextInfo"
+        android:layout_marginTop="14dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/complementarTextInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/distanciaText"
+        android:layout_marginTop="14dp"
+        android:layout_toRightOf="@+id/infoBackButton"
+        android:text="ou" />
+
+    <TextView
+        android:id="@+id/textGastoDeCombustivel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="33dp"
+        android:text="Valor gasto em R$:"
+        android:textSize="25dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/valorGastoDeCombustivel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/infoBackButton"
+        android:layout_alignLeft="@+id/textCombustivelCarro"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/textDesempenhoCarro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView3"
+        android:layout_toRightOf="@+id/distanciaText"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/textCombustivelCarro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textGastoDeCombustivel"
+        android:layout_alignLeft="@+id/textDesempenhoCarro"
+        android:text="TextView" />
+
+    <Button
+        android:id="@+id/infoBackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textGastoDeCombustivel"
+        android:layout_marginTop="173dp"
+        android:layout_toLeftOf="@+id/distanciaText"
+        android:text="      Voltar      "
+        android:textSize="25dp" />
+
+</RelativeLayout>
