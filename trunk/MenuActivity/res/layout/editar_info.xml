@@ -4,16 +4,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/fundo2" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="34dp"
-        android:text="Escolher modelo do carro       na lista:"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
     <!-- <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
@@ -23,43 +13,65 @@
         android:layout_toRightOf="@+id/spinner1"
         android:text="Button" /> -->
 
-    <Button
-        android:id="@+id/editarInfoOkButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/cancelarButton"
-        android:layout_alignBottom="@+id/cancelarButton"
-        android:layout_alignLeft="@+id/textView2"
-        android:text="     Ok     " />
-
-    <Button
-        android:id="@+id/cancelarButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="22dp"
-        android:layout_marginRight="25dp"
-        android:text="  Voltar  " />
-
     <Spinner
         android:id="@+id/spinner1"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignLeft="@+id/editarInfoButton"
         android:layout_below="@+id/textView1"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="14dp"
         android:layout_toLeftOf="@+id/cancelarButton" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/spinner1"
-        android:layout_marginTop="22dp"
-        android:text="Adicionar informações do           carro a lista:"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="Escolher modelo do carro  na lista:"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="25dp" />
+
+    <Button
+        android:id="@+id/editarInfoOkButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_below="@+id/editTextValorComb"
+        android:layout_marginTop="74dp"
+        android:text="     Ok     " />
+
+    <Button
+        android:id="@+id/cancelarButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editarInfoOkButton"
+        android:layout_alignBottom="@+id/editarInfoOkButton"
+        android:layout_alignRight="@+id/textView3"
+        android:text="  Voltar  " />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="Valor do litro de combustivel:"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="25dp" />
+
+    <EditText
+        android:id="@+id/editTextValorComb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="53dp"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
 
     <Button
         android:id="@+id/editarInfoButton"
@@ -67,29 +79,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="60dp"
         android:text="     Adicionar Carro      " />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/cancelarButton"
-        android:layout_below="@+id/editarInfoButton"
-        android:layout_marginTop="24dp"
-        android:text="Valor do litro de combustivel:"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <EditText
-        android:id="@+id/editTextValorComb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/cancelarButton"
-        android:layout_alignLeft="@+id/editarInfoButton"
-        android:layout_alignRight="@+id/editarInfoButton"
-        android:ems="10" >
-
-        <requestFocus />
-    </EditText>
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/spinner1"
+        android:layout_marginTop="46dp"
+        android:text="Adicionar informações do carro a lista:"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="25dp" />
 
 </RelativeLayout>
