@@ -13,7 +13,6 @@ public class InfoCarroActivity extends Activity {
 	private String combustivel;
 	EditText modeloText;
 	
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -25,6 +24,7 @@ public class InfoCarroActivity extends Activity {
             public void onClick(View view) {
             	if (validaCamposDeTexto() == true) {
             		spinner();
+            		finish();
             	}
             }
         });
@@ -40,14 +40,14 @@ public class InfoCarroActivity extends Activity {
 	
 	private void spinner() {
 		Intent menu = new Intent(this, EditarInfoActivity.class);		
-		calculaCombustivel();	
+		calculaCombustivel();
 		menu.putExtra("modeloCarro", String.valueOf(modeloText.getText().toString()));
 		menu.putExtra("desempenho", this.combustivel);
         startActivity(menu);
 	}
 	
 	private boolean validaCamposDeTexto() {
-		EditText modeloText = (EditText) findViewById(R.id.editTextValorComb);
+		modeloText = (EditText) findViewById(R.id.editTextValorComb);
 		EditText tipoCombustivel = (EditText) findViewById(R.id.editText2);
 		EditText kmInicial = (EditText) findViewById(R.id.editText3);
 		EditText kmFinal = (EditText) findViewById(R.id.editText4);
