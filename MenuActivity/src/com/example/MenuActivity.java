@@ -27,7 +27,6 @@ public class MenuActivity extends Activity{
         
         combustivelPorKm = (String) getIntent().getSerializableExtra("combustivelPorKm");
         
-		//TESTANDO O COMITT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		
 		btMapButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -47,6 +46,7 @@ public class MenuActivity extends Activity{
 		editarInfoButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 telaInfo();
+                finish();
             }
         });
 	}
