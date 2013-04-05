@@ -1,10 +1,15 @@
 package com.example;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
@@ -13,11 +18,13 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +46,9 @@ public class GMapsActivity extends MapActivity {
 	TextView txtLongitude;
 	String pontosSalvos = "";
 	private ArrayList<GeoPoint> geopointsList = new ArrayList<GeoPoint>();
+	HashMap<String, GeoPoint> mapa;
+	private EditText nome;
+//	String nome;
 	//MapController mc = mapView.getController();
 	
 	//GPS
@@ -50,7 +60,7 @@ public class GMapsActivity extends MapActivity {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		
+		 nome= ((EditText) findViewById(R.id.xxx));
 		vibe = (Vibrator) GMapsActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
 
 		final Drawable drawable = this.getResources().getDrawable(
@@ -73,7 +83,8 @@ public class GMapsActivity extends MapActivity {
 			@Override
 			public void onClick(View arg0) {
 				geopointsList.addAll(itemizedOverlay.getGeopointList());
-				Toast.makeText(GMapsActivity.this, "Ponto salvo com sucesso",Toast.LENGTH_SHORT).show();
+				showDialog(0);
+//				Toast.makeText(GMapsActivity.this, "Ponto salvo com sucesso",Toast.LENGTH_SHORT).show();
 				telaMapa(drawable);
 			}
 		});
@@ -118,10 +129,16 @@ public class GMapsActivity extends MapActivity {
 	private void mostrarPontos(String pontosSalvos) {
 		Intent ponto = new Intent(this, PontosActivity.class);
 		if (geopointsList.size() != 0){
+//			
+//			for (int i = 0; i < geopointsList.size(); i++){
+//				pontosSalvos += geopointsList.get(i).toString() + "\t";
+//			}
 			
-			for (int i = 0; i < geopointsList.size(); i++){
-				pontosSalvos += geopointsList.get(i).toString() + "\t";
+			Iterator<String> it = mapa.keySet().iterator();
+			while(it.hasNext()){
+				pontosSalvos += it.next();
 			}
+			
 		}
 		this.pontosSalvos = pontosSalvos;
 		ponto.putExtra("mostrarPontos", pontosSalvos);
@@ -161,6 +178,50 @@ public class GMapsActivity extends MapActivity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
+	
+	
+	@Override
+    protected Dialog onCreateDialog(int id) {
+
+         switch (id) {
+         case 0:
+
+              LayoutInflater factory = LayoutInflater.from(this);
+              final View textEntryView = factory.inflate(R.layout.addnomeponto, null);
+             final EditText x = ((EditText) findViewById(R.id.xxx));
+              return new AlertDialog.Builder(GMapsActivity.this)
+                   .setTitle("Digite o Nome do Ponto").setView(textEntryView)
+                   .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                        	
+//                          nome = (EditText) findViewById(R.add_nome_ponto.nomePonto);
+                        	
+//                        	nome = ((EditText) findViewById(R.add_nome_ponto.nomePonto))
+//        						.getText().toString();
+                        	mapa = new HashMap<String, GeoPoint>();
+                        	if(x==null){
+                        		 dialog.cancel();
+                        		Log.v("edittext","sdfksdkfsdkfj");
+                        	}
+                        	if(nome.getText().toString().equals("")){
+                        		Toast.makeText(GMapsActivity.this, "Nome Invalido",Toast.LENGTH_SHORT).show();
+                        	}
+                        	else{                        		
+                        		mapa.put(nome.getText().toString(), geopointsList.get(0));
+                        		Toast.makeText(GMapsActivity.this, "Ponto salvo com sucesso",Toast.LENGTH_SHORT).show();
+                        	}
+                        	
+                   }
+              }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int whichButton) {
+                	  dialog.cancel();
+                   }
+              }).create(); 
+
+         }
+         return null;
+    }
+
 
 
 	public void telaMapa(Drawable drawable) {
