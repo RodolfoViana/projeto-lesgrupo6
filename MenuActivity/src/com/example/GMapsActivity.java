@@ -60,7 +60,7 @@ public class GMapsActivity extends MapActivity {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		 nome= ((EditText) findViewById(R.id.xxx));
+		
 		vibe = (Vibrator) GMapsActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
 
 		final Drawable drawable = this.getResources().getDrawable(
@@ -136,7 +136,7 @@ public class GMapsActivity extends MapActivity {
 			
 			Iterator<String> it = mapa.keySet().iterator();
 			while(it.hasNext()){
-				pontosSalvos += it.next();
+				pontosSalvos += it.next() + "\t";
 			}
 			
 		}
@@ -187,17 +187,15 @@ public class GMapsActivity extends MapActivity {
          case 0:
 
               LayoutInflater factory = LayoutInflater.from(this);
-              final View textEntryView = factory.inflate(R.layout.addnomeponto, null);
+              final View textEntryView = factory.inflate(R.layout.addnomeponto,null);
              final EditText x = ((EditText) findViewById(R.id.xxx));
-              return new AlertDialog.Builder(GMapsActivity.this)
+                           return new AlertDialog.Builder(GMapsActivity.this)
                    .setTitle("Digite o Nome do Ponto").setView(textEntryView)
                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
                         	
-//                          nome = (EditText) findViewById(R.add_nome_ponto.nomePonto);
-                        	
-//                        	nome = ((EditText) findViewById(R.add_nome_ponto.nomePonto))
-//        						.getText().toString();
+                        	nome = (EditText) textEntryView.findViewById(R.id.xxx);
+
                         	mapa = new HashMap<String, GeoPoint>();
                         	if(x==null){
                         		 dialog.cancel();
