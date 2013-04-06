@@ -54,6 +54,7 @@ public class GMapsActivity extends MapActivity {
 	//GPS
 	private LocationManager locationManager;
 	private LocationListener locationListener;
+	private double latitudeGPS,longitudeGPS;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -103,7 +104,7 @@ public class GMapsActivity extends MapActivity {
 			
 			@Override
 			public void onClick(View arg0) {
-				mostrarPontos(pontosSalvos);
+				//mostrarPontos(pontosSalvos);
 			}
 		});
 		
@@ -237,20 +238,23 @@ public class GMapsActivity extends MapActivity {
 		List<Overlay> mapOverlays = mapView.getOverlays();
 
 		MapController mc = mapView.getController();
-		
+		IniciarServico();
 		double lat = itemizedOverlay.getLatitude();
 		double lon = itemizedOverlay.getLongitude();
-		GeoPoint geoPoint = new GeoPoint((int) (lat * 1E6), (int) (lon * 1E6));
+		//GeoPoint geoPoint = new GeoPoint((int) (lat * 1E6), (int) (lon * 1E6));
+		GeoPoint geoPoint = new GeoPoint((int) getGPSLatitude(), (int) getGPSLongitude());
 		mc.animateTo(geoPoint);
 		mc.setZoom(15);
+		OverlayItem overlayitem = new OverlayItem(geoPoint,"Hello", "Sample Overlay item");
+		itemizedOverlay.addOverlay(overlayitem);
 		// mapView.invalidate();
 		mapView.setSatellite(true);
 		
 		
 		//GPS
-		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		locationListener = new NovaLocalizacao();
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+//		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//		locationListener = new NovaLocalizacao();
+//		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
 		mapOverlays.add(itemizedOverlay);
 		if(contMarcador<3){			
@@ -258,15 +262,37 @@ public class GMapsActivity extends MapActivity {
 		}
 	}
 	
-	 public void Atualizar(Location location)
+	 public void IniciarServico()
+	    {
+	    	LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+	    	
+	    	LocationListener locationListener = new NovaLocalizacao()  {
+	    	    public void onLocationChanged(Location location) {
+	    	      Atualizar(location);
+	    	    }
+
+	    	    public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+	    	    public void onProviderEnabled(String provider) {}
+
+	    	    public void onProviderDisabled(String provider) {}
+	    	  };
+
+	    	  locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+	    }
+	    
+	    public void Atualizar(Location location)
 	    {
 	    	Double latPoint = location.getLatitude();
 	    	Double lngPoint = location.getLongitude();
+	    	latitudeGPS = location.getLatitude();
+	    	longitudeGPS = location.getLongitude();
+	    	
+//	    	OverlayItem overlayitem = new OverlayItem(new GeoPoint(latPoint.intValue(), lngPoint.intValue()),"Hello", "Sample Overlay item");
+//			itemizedOverlay.addOverlay(overlayitem);
 	        
-	        txtLatitude.setText(latPoint.toString());
-	        txtLongitude.setText(lngPoint.toString());
+	       
 	    }
-	
 	
 	class NovaLocalizacao implements LocationListener{
 
@@ -294,5 +320,16 @@ public class GMapsActivity extends MapActivity {
 		}
 		
 	}
+	
+	private double getGPSLatitude(){
+		
+		return latitudeGPS;
+	}
+	
+	private double getGPSLongitude(){
+		
+		return longitudeGPS;
+	}
+	
 	
 }
