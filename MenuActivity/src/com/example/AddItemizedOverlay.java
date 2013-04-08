@@ -40,6 +40,10 @@ public class AddItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		this.geopointsList = new ArrayList<GeoPoint>();
 		this.vibe = vibe;
 	}
+	
+	public void addGeoPointList(GeoPoint point){
+		geopointsList.add(point);
+	}
 
 	public double getLatitude() {
 		return lat;
