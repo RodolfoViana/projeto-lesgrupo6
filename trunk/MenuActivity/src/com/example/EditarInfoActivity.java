@@ -25,7 +25,7 @@ public class EditarInfoActivity extends Activity{
 	private Spinner spinnerCarros;
 	private int checkedItem;
 	private static double valorCombustivelLD = 0.0;
-	//Persistencia persistencia = new Persistencia();
+	Persistencia persistencia = new Persistencia();
 	
 	
 	@Override
@@ -36,23 +36,22 @@ public class EditarInfoActivity extends Activity{
         combustivelPorKm = (String) getIntent().getSerializableExtra("desempenho");
         modelo = (String) getIntent().getSerializableExtra("modeloCarro");
         
-//        try {
-//        	valuesList = persistencia.recuperarDadosString("modelo.xml");
-//        } catch (Exception e) {
+        try {
+        	valuesList = persistencia.recuperarDadosString("modelo.xml");
+        } catch (Exception e) {
         	povoaLista();
-//        }
+        }
         
-//        try {
-//        	desempenhoList = persistencia.recuperarDadosDouble("desempenho.xml");
-//        } catch (Exception e) {
+        try {
+        	desempenhoList = persistencia.recuperarDadosDouble("desempenho.xml");
+        } catch (Exception e) {
         	desempenhos();
-//        }
+        }
         
         if ((combustivelPorKm != null) && (modelo != null)) {
-        	//valuesList.add(modelo.toString());
         	addModeloDesempenho();
-//        	persistencia.salvarDadosString(valuesList, "modelo.xml");
-//        	persistencia.salvarDadosDouble(desempenhoList, "desempenho.xml");
+        	persistencia.salvarDadosString(valuesList, "modelo.xml");
+        	persistencia.salvarDadosDouble(desempenhoList, "desempenho.xml");
         }
         
         spinnerCarros = (Spinner) findViewById(R.id.spinner1);
