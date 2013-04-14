@@ -22,26 +22,6 @@
         android:layout_marginTop="14dp"
         android:layout_toLeftOf="@+id/cancelarButton" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:text="Escolher modelo do carro  na lista:"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="25dp" />
-
-    <Button
-        android:id="@+id/editarInfoOkButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_below="@+id/editTextValorComb"
-        android:layout_marginTop="74dp"
-        android:text="     Ok     " />
-
     <Button
         android:id="@+id/cancelarButton"
         android:layout_width="wrap_content"
@@ -51,13 +31,29 @@
         android:layout_alignRight="@+id/textView3"
         android:text="  Voltar  " />
 
-    <TextView
-        android:id="@+id/textView3"
+    <Button
+        android:id="@+id/editarInfoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Valor do litro de combustivel:"
+        android:text="     Adicionar Carro      " />
+
+    <Button
+        android:id="@+id/editarInfoOkButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="     Ok     " />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView3"
+        android:layout_below="@+id/spinner1"
+        android:text="Adicionar informações do carro a lista:"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="25dp" />
 
@@ -65,31 +61,30 @@
         android:id="@+id/editTextValorComb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView3"
+        android:layout_above="@+id/cancelarButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="53dp"
-        android:ems="10" >
-
-        <requestFocus />
-    </EditText>
-
-    <Button
-        android:id="@+id/editarInfoButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
-        android:text="     Adicionar Carro      " />
+        android:layout_marginBottom="20dp"
+        android:ems="10" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editTextValorComb"
+        android:layout_below="@+id/editarInfoButton"
+        android:text="Valor do litro de combustivel:"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="25dp" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView2"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/spinner1"
-        android:layout_marginTop="46dp"
-        android:text="Adicionar informações do carro a lista:"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:text="Escolher modelo do carro  na lista:"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="25dp" />
 
