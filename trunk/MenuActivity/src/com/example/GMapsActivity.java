@@ -68,7 +68,7 @@ public class GMapsActivity extends MapActivity {
 //		Toast.makeText(GMapsActivity.this, testePonto,Toast.LENGTH_SHORT).show();
 		
 		final Drawable drawable = this.getResources().getDrawable(
-				R.drawable.ic_launcher);
+				R.drawable.marker_icon);
 		
 		combustivelPorKm = (String) getIntent().getSerializableExtra("combustivelPorKm");
 

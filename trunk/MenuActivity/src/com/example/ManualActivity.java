@@ -17,10 +17,7 @@ public class ManualActivity extends TabActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manual);
-        
-        //TextView txtManual = (TextView) findViewById(R.id.textManual2);
-        //txtManual.setText("Informaçoes do Manual");
-        
+                
         Button backButton = (Button) findViewById(R.id.voltarNoManual);
 		backButton.setOnClickListener(new View.OnClickListener() {
 			
@@ -37,9 +34,11 @@ public class ManualActivity extends TabActivity {
 		Intent intentMap = new Intent().setClass(this, ManualMapActivity.class);
 		TabSpec tabSpecMap = tabHost.newTabSpec("Marcar Ponto").setIndicator("Marcar Ponto", resources.getDrawable(R.drawable.icon_map)).setContent(intentMap);
 		
+		// GPS Tab
 		Intent intentGps = new Intent().setClass(this, ManualGpsActivity.class);
 		TabSpec tabSpecGps = tabHost.newTabSpec("Localizar Ponto").setIndicator("Localizar Ponto", resources.getDrawable(R.drawable.icon_gps)).setContent(intentGps);
 		
+		//Adiciona Carro Tab
 		Intent intentAdicionaCarro = new Intent().setClass(this, ManualAdicionaCarroActivity.class);
 		TabSpec tabSpecAdicionaCarro = tabHost.newTabSpec("Gerenciar Carro").setIndicator("Gerenciar Carro", resources.getDrawable(R.drawable.icon_new_carro)).setContent(intentAdicionaCarro);
 		
