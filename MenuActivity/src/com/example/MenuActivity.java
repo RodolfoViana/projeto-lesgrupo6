@@ -13,7 +13,7 @@ import android.widget.Toast;
 public class MenuActivity extends Activity{
 	
 	String combustivelPorKm;
-	 Button voltarDoManualButton;
+	Button voltarDoManualButton;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

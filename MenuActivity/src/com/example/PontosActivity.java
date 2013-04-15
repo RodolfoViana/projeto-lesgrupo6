@@ -3,6 +3,7 @@ package com.example;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 
 import com.google.android.maps.GeoPoint;
 
@@ -10,15 +11,22 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 public class PontosActivity extends Activity{
 	
 	String mostrarPontos;
 	Button voltarDoManualButton;
+	private Spinner spinnerCarros;
+	private int checkedItem;
 	HashSet<String> stringGeoPoint = new HashSet<String>();
+	private List<String> valuesList = new ArrayList<String>();
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -33,14 +41,48 @@ public class PontosActivity extends Activity{
         for ( int i= 0; i < aux.split("\t").length;  i++){
         	stringGeoPoint.add(mostrarPontos.split("\t")[i]);
         }
+        valuesList.add("Pontos Marcados");
         
         String aux2 = ""; 
+        String aux3;
         int cont = 1;
         Iterator<String> it = stringGeoPoint.iterator();
         while (it.hasNext()){
-        	aux2 += cont + "\t" + it.next() + "\n";
+        	aux3 = it.next();
+        	aux2 += cont + "\t" + aux3 + "\n";
+        	valuesList.add(aux3);
         	cont++;
         }
+        
+        
+        spinnerCarros = (Spinner) findViewById(R.id.pontosSpinner);
+        
+        
+        
+        ArrayAdapter<Object> adapter = new ArrayAdapter<Object>(this, android.R.layout.simple_list_item_1, android.R.id.text1, valuesList.toArray());      
+//        ArrayAdapter<Object> adapter = new ArrayAdapter<Object>(PontosActivity.this, 0);   
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCarros.setAdapter(adapter);
+        
+        spinnerCarros.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				checkedItem = spinnerCarros.getSelectedItemPosition();
+				if (checkedItem != 0) {
+					Toast.makeText( PontosActivity.this, valuesList.get(checkedItem), Toast.LENGTH_LONG).show();
+
+//					Toast.makeText(EditarInfoActivity.this, "Modelo: " + valuesList.get(checkedItem) + " Desempenho: " + desempenhoList.get(checkedItem) + "km/l", Toast.LENGTH_LONG).show();
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				
+			}
+		});
+        
         
         TextView text = (TextView) findViewById(R.id.pontosSalvos);
         text.setText(aux2);
@@ -48,10 +90,16 @@ public class PontosActivity extends Activity{
         Button btMapButton = (Button) findViewById(R.id.voltarPontos);
 		btMapButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                finish();
+            	salvarPontos("casa");
             }
         });
 		
+	}
+	
+	private void salvarPontos(String pontosSalvos) {
+		Intent pontoSalvo = new Intent(this, GMapsActivity.class);
+		pontoSalvo.putExtra("pontoEscolhido", valuesList.get(checkedItem));
+		startActivity(pontoSalvo);
 	}
 
 }
