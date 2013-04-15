@@ -44,6 +44,7 @@ public class GMapsActivity extends MapActivity {
 	private AddItemizedOverlay itemizedOverlay;
 	TextView txtLatitude;
 	TextView txtLongitude;
+	String testePonto = "";
 	String pontosSalvos = "";
 	private ArrayList<GeoPoint> geopointsList = new ArrayList<GeoPoint>();
 	HashMap<String, GeoPoint> mapa;
@@ -62,7 +63,10 @@ public class GMapsActivity extends MapActivity {
 		setContentView(R.layout.main);
 		
 		vibe = (Vibrator) GMapsActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
+//		testePonto = (String) getIntent().getSerializableExtra("pontoEscolhido");
 
+//		Toast.makeText(GMapsActivity.this, testePonto,Toast.LENGTH_SHORT).show();
+		
 		final Drawable drawable = this.getResources().getDrawable(
 				R.drawable.ic_launcher);
 		
@@ -73,7 +77,7 @@ public class GMapsActivity extends MapActivity {
 
 			@Override
 			public void onClick(View arg0) {
-				telaMapa(drawable);
+				telaMapa(drawable, testePonto);
 			}
 		});
 		
@@ -84,6 +88,7 @@ public class GMapsActivity extends MapActivity {
 			public void onClick(View arg0) {
 				geopointsList.addAll(itemizedOverlay.getGeopointList());
 				showDialog(0);
+				telaMapa(drawable, testePonto);
 //				Toast.makeText(GMapsActivity.this, "Ponto salvo com sucesso",Toast.LENGTH_SHORT).show();
 //				telaMapa(drawable);
 			}
@@ -107,7 +112,7 @@ public class GMapsActivity extends MapActivity {
 			}
 		});
 		
-		telaMapa(drawable);
+		telaMapa(drawable, testePonto);
 	}
 
 	@Override
@@ -128,12 +133,7 @@ public class GMapsActivity extends MapActivity {
 	
 	private void mostrarPontos(String pontosSalvos) {
 		Intent ponto = new Intent(this, PontosActivity.class);
-		if (geopointsList.size() != 0){
-//			
-//			for (int i = 0; i < geopointsList.size(); i++){
-//				pontosSalvos += geopointsList.get(i).toString() + "\t";
-//			}
-			
+		if (geopointsList.size() != 0){	
 			Iterator<String> it = mapa.keySet().iterator();
 			while(it.hasNext()){
 				pontosSalvos += it.next() + "\t";
@@ -218,7 +218,11 @@ public class GMapsActivity extends MapActivity {
 
 
 
-	public void telaMapa(Drawable drawable) {
+	public void telaMapa(Drawable drawable, String testePonto) {
+		
+		if (testePonto.length() == 0){
+		
+		
 		mapView = (MapView) findViewById(R.id.map_view);
 		mapView.getOverlays().clear();
 		mapView.invalidate();
@@ -251,6 +255,10 @@ public class GMapsActivity extends MapActivity {
 		mapOverlays.add(itemizedOverlay);
 		if(contMarcador<3){			
 			contMarcador += 1;
+		}
+		}
+		else {
+			Toast.makeText(GMapsActivity.this, "Ponto salvooooooooooooooo com sucesso",Toast.LENGTH_SHORT).show();
 		}
 	}
 	
