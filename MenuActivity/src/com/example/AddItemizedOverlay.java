@@ -7,6 +7,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
@@ -41,6 +42,9 @@ public class AddItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		this.vibe = vibe;
 	}
 
+	public void addGeoPointList(GeoPoint point){
+		geopointsList.add(point);
+	}
 	
 	public double getLatitude() {
 		return lat;
@@ -84,6 +88,7 @@ public class AddItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 				GeoPoint geopoint = mapView.getProjection().fromPixels((int) event.getX(), (int) event.getY());
 				this.lat = geopoint.getLatitudeE6() / 1E6;
 				this.lon = geopoint.getLongitudeE6() / 1E6;
+				
 				geopointsList.add(geopoint);
 
 				// Dai eu so deixo marcar se o tempo for maior que 500L
