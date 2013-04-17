@@ -28,6 +28,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.AddItemizedOverlay;
+import com.example.GMapsActivity;
+import com.example.R;
+import com.example.GMapsActivity.NovaLocalizacao;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
@@ -44,7 +48,6 @@ public class GMapsActivity extends MapActivity {
 	private AddItemizedOverlay itemizedOverlay;
 	TextView txtLatitude;
 	TextView txtLongitude;
-	String testePonto = "";
 	String pontosSalvos = "";
 	private ArrayList<GeoPoint> geopointsList = new ArrayList<GeoPoint>();
 	HashMap<String, GeoPoint> mapa;
@@ -55,6 +58,10 @@ public class GMapsActivity extends MapActivity {
 	//GPS
 	private LocationManager locationManager;
 	private LocationListener locationListener;
+	private double latitudeGPS, longitudeGPS;
+	private boolean gpsAtivado = false;
+	GeoPoint geoPoint;
+	MapController mc;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -71,13 +78,14 @@ public class GMapsActivity extends MapActivity {
 				R.drawable.marker_icon);
 		
 		combustivelPorKm = (String) getIntent().getSerializableExtra("combustivelPorKm");
-
+		itemizedOverlay = new AddItemizedOverlay(drawable);
 		Button bt = (Button) findViewById(R.id.button1);
 		bt.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				telaMapa(drawable, testePonto);
+				itemizedOverlay.apagarPontos();
 			}
 		});
 		
@@ -109,6 +117,19 @@ public class GMapsActivity extends MapActivity {
 			@Override
 			public void onClick(View arg0) {
 				mostrarPontos(pontosSalvos);
+			}
+		});
+		
+		Button btUsarGPS = (Button) findViewById(R.id.btUsarGPS);
+		btUsarGPS.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				
+				IniciarServico();
+				
+				
+				
 			}
 		});
 		
@@ -240,9 +261,9 @@ public class GMapsActivity extends MapActivity {
 		
 		double lat = itemizedOverlay.getLatitude();
 		double lon = itemizedOverlay.getLongitude();
-		GeoPoint geoPoint = new GeoPoint((int) (lat * 1E6), (int) (lon * 1E6));
-		mc.animateTo(geoPoint);
-		mc.setZoom(15);
+		//GeoPoint geoPoint = new GeoPoint((int) (lat * 1E6), (int) (lon * 1E6));
+//		mc.animateTo(geoPoint);
+//		mc.setZoom(15);
 		// mapView.invalidate();
 		mapView.setSatellite(true);
 		
@@ -262,41 +283,129 @@ public class GMapsActivity extends MapActivity {
 		}
 	}
 	
-	 public void Atualizar(Location location)
-	    {
-	    	Double latPoint = location.getLatitude();
-	    	Double lngPoint = location.getLongitude();
-	        
-	        txtLatitude.setText(latPoint.toString());
-	        txtLongitude.setText(lngPoint.toString());
-	    }
-	
-	
-	class NovaLocalizacao implements LocationListener{
+	public void IniciarServico() {
+		
+		final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
 
+		if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+			
+			Toast.makeText(GMapsActivity.this, "GPS nao estar ativado",Toast.LENGTH_SHORT).show();
+			buildAlertMessageNoGps();
+			
+	    }else{
+	    	Toast.makeText(GMapsActivity.this, "GSP está ativado!",Toast.LENGTH_SHORT).show();
+	    	Log.i("Verif - LAT:" + getGPSLatitude()+"-"+"LON:" +getGPSLongitude() , "OnLoationChanged GPS");
+	    	
+	    }
+		
+		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//		locationListener = new NovaLocalizacao();
+//		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
+//				0, locationListener);
+//		Log.i("Entrou no iniciar servico", "OnLoationChanged GPS");
+		
+
+		locationListener = new NovaLocalizacao() {
+			public void onLocationChanged(Location location) {
+				Atualizar(location);
+			}
+
+			public void onStatusChanged(String provider, int status,
+					Bundle extras) {
+			}
+
+			public void onProviderEnabled(String provider) {
+			}
+
+			public void onProviderDisabled(String provider) {
+			}
+		};
+
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
+				0, locationListener);
+	}
+
+	public void Atualizar(Location location) {
+		Double latPoint = location.getLatitude();
+		Double lngPoint = location.getLongitude();
+		latitudeGPS = location.getLatitude();
+		longitudeGPS = location.getLongitude();
+		
+		geoPoint = new GeoPoint((int) getGPSLatitude(),(int) getGPSLongitude());
+		Log.i("LAT:" + geoPoint.getLatitudeE6()+"-"+"LON:" +geoPoint.getLongitudeE6() , "OnLoationChanged GPS");
+//		mc.animateTo(geoPoint);
+//		mc.setZoom(15);
+				
+				
+		OverlayItem overlayitem = new OverlayItem(geoPoint, "Hello",
+				"Sample Overlay item");
+		itemizedOverlay.addOverlay(overlayitem);
+		itemizedOverlay.addGeoPointList(geoPoint);
+
+
+		
+	}
+
+	class NovaLocalizacao implements LocationListener {
+		
 		@Override
 		public void onLocationChanged(Location location) {
-			Log.i("onLocationChaged Rodolfo", "OnLoationChanged GPS");
+			Log.i("MUDOU A LOCALIZACAO", "OnLoationChanged GPS");
 		}
 
 		@Override
 		public void onProviderDisabled(String provider) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void onProviderEnabled(String provider) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void onStatusChanged(String provider, int status, Bundle extras) {
 			// TODO Auto-generated method stub
-			
+
 		}
-		
+
+	}
+
+	private double getGPSLatitude() {
+
+		return latitudeGPS;
+	}
+
+	private double getGPSLongitude() {
+
+		return longitudeGPS;
 	}
 	
+	public boolean isGpsAtivado() {
+		return gpsAtivado;
+	}
+
+	public void setGpsAtivado(boolean gpsAtivado) {
+		this.gpsAtivado = gpsAtivado;
+	}
+	
+	private void buildAlertMessageNoGps() {
+	    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	    builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+	           .setCancelable(false)
+	           .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+	               public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+	                   startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+	               }
+	           })
+	           .setNegativeButton("No", new DialogInterface.OnClickListener() {
+	               public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+	                    dialog.cancel();
+	               }
+	           });
+	    final AlertDialog alert = builder.create();
+	    alert.show();
+	}
 }
