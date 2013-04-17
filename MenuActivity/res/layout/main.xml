@@ -50,5 +50,15 @@
      android:layout_alignParentRight="true"
      android:layout_below="@+id/button1"
      android:text="   Pontos   " />
+ 
+ <Button
+     android:id="@+id/btUsarGPS"
+     style="?android:attr/buttonStyleSmall"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_alignBaseline="@+id/mostrarPontos"
+     android:layout_alignBottom="@+id/mostrarPontos"
+     android:layout_alignRight="@+id/infoButton"
+     android:text="Usar GPS" />
 
 </RelativeLayout>
