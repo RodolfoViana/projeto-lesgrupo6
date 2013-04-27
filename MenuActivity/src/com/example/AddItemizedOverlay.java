@@ -41,6 +41,15 @@ public class AddItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		this.geopointsList = new ArrayList<GeoPoint>();
 		this.vibe = vibe;
 	}
+	
+	public AddItemizedOverlay(Drawable defaultMarker, Context context, Vibrator vibe, int lat, int lon) {	
+		this(defaultMarker);
+		this.context = context;
+		this.lat = lat;
+		this.lon = lon;
+		this.geopointsList = new ArrayList<GeoPoint>();
+		this.vibe = vibe;
+	}
 
 	public void addGeoPointList(GeoPoint point){
 		geopointsList.add(point);
@@ -179,7 +188,20 @@ public class AddItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		double radians = degrees * 3.1415926535897932385 / 180;
 		return radians;
 	}
-
+	
+	
+	public void addPonto(int lat, int lon){
+		GeoPoint geoPoint = new GeoPoint((int)  lat,(int) lat);
+		OverlayItem overlayitem = new OverlayItem(geoPoint, "Hello",
+				"Sample Overlay item");
+		this.addOverlay(overlayitem);
+		this.addGeoPointList(geoPoint);
+		this.populate();
+	}
+	
+	
+	
+	
 	public void removerOverlay() {
 		this.mapOverlays = new ArrayList<OverlayItem>();
 		this.populate();
