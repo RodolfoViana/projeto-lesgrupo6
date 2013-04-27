@@ -69,11 +69,8 @@ public class GMapsActivity extends MapActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		
-		vibe = (Vibrator) GMapsActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
-//		testePonto = (String) getIntent().getSerializableExtra("pontoEscolhido");
+		vibe = (Vibrator) GMapsActivity.this.getSystemService(Context.VIBRATOR_SERVICE);		
 
-//		Toast.makeText(GMapsActivity.this, testePonto,Toast.LENGTH_SHORT).show();
-		
 		final Drawable drawable = this.getResources().getDrawable(
 				R.drawable.marker_icon);
 		
@@ -84,10 +81,11 @@ public class GMapsActivity extends MapActivity {
 
 			@Override
 			public void onClick(View arg0) {
-				telaMapa(drawable, testePonto);
+				telaMapa(drawable);
 				itemizedOverlay.apagarPontos();
 			}
 		});
+		
 		
 		Button salvarPontos = (Button) findViewById(R.id.salvaButton);
 		salvarPontos.setOnClickListener(new View.OnClickListener() {
@@ -96,11 +94,49 @@ public class GMapsActivity extends MapActivity {
 			public void onClick(View arg0) {
 				geopointsList.addAll(itemizedOverlay.getGeopointList());
 				showDialog(0);
-				telaMapa(drawable, testePonto);
-//				Toast.makeText(GMapsActivity.this, "Ponto salvo com sucesso",Toast.LENGTH_SHORT).show();
-//				telaMapa(drawable);
+				telaMapa(drawable);
 			}
 		});
+		
+		//Começo do ponto escolhido na outra tela
+		String string = (String) getIntent().getSerializableExtra("pontoEscolhido");
+		if (string != null){
+		String stringAux = string.split("\t")[string.split("\t").length-1].split(":")[0];
+		if (stringAux.equalsIgnoreCase("1")){
+			String aux2 = string.split("\t")[string.split("\t").length-1].split(":")[1].split("/")[1];
+			Toast.makeText(GMapsActivity.this, aux2,Toast.LENGTH_SHORT).show();
+			String a = aux2.split(",")[0]; //Latitude do ponto escolhido
+			String b = aux2.split(",")[1]; //Longitude do ponto escolhido
+			
+			//tentativa fail =\ rodolfo
+//			Toast.makeText(GMapsActivity.this, a,Toast.LENGTH_SHORT).show();
+//			geoPoint = new GeoPoint((int)  Integer.parseInt(a),(int) Integer.parseInt(b));
+//
+//			itemizedOverlay = new AddItemizedOverlay(drawable, this, vibe);
+//			
+//			mapView = (MapView) findViewById(R.id.map_view);
+//			mapView.getOverlays().clear();
+//			mapView.invalidate();
+//			mapView.setBuiltInZoomControls(true);
+//			mapView.setSatellite(true); // Satellite View
+//			mapView.setStreetView(true); // Street View
+//			mapView.setTraffic(true); // Traffic View
+//
+//			List<Overlay> mapOverlays = mapView.getOverlays();
+//			mapView.setSatellite(true);
+//			
+////			OverlayItem overlayitem = new OverlayItem(geoPoint, "Hello",
+////					"Sample Overlay item");
+//			itemizedOverlay.addPonto(Integer.parseInt(a), Integer.parseInt(b));
+////			itemizedOverlay.addGeoPointList(geoPoint);
+//
+//			mapOverlays.add(itemizedOverlay);
+			
+			}
+		
+		}
+		//Fim do ponto escolhido na outra tela
+		
 		
 		Button infoButton = (Button) findViewById(R.id.infoButton);
 		infoButton.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +153,7 @@ public class GMapsActivity extends MapActivity {
 			@Override
 			public void onClick(View arg0) {
 				mostrarPontos(pontosSalvos);
+				finish();
 			}
 		});
 		
@@ -124,16 +161,12 @@ public class GMapsActivity extends MapActivity {
 		btUsarGPS.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
-			public void onClick(View arg0) {
-				
+			public void onClick(View arg0) {				
 				IniciarServico();
-				
-				
-				
 			}
 		});
 		
-		telaMapa(drawable, testePonto);
+		telaMapa(drawable);
 	}
 
 	@Override
@@ -153,17 +186,23 @@ public class GMapsActivity extends MapActivity {
 	}
 	
 	private void mostrarPontos(String pontosSalvos) {
+		String aux;
 		Intent ponto = new Intent(this, PontosActivity.class);
 		if (geopointsList.size() != 0){	
 			Iterator<String> it = mapa.keySet().iterator();
 			while(it.hasNext()){
-				pontosSalvos += it.next() + "\t";
+				aux = it.next();
+				pontosSalvos += aux + "/" + mapa.get(aux) + "\t";
 			}
 			
 		}
 		this.pontosSalvos = pontosSalvos;
 		ponto.putExtra("mostrarPontos", pontosSalvos);
 		startActivity(ponto);
+		
+//		String string = (String) getIntent().getSerializableExtra("pontoEscolhido");
+//		Toast.makeText( GMapsActivity.this, string, Toast.LENGTH_LONG).show();
+//		finish();
 	}
 	
 	@Override
@@ -215,9 +254,8 @@ public class GMapsActivity extends MapActivity {
                         public void onClick(DialogInterface dialog, int whichButton) {
                         	
                         	nome = (EditText) textEntryView.findViewById(R.id.xxx);
-
                         	mapa = new HashMap<String, GeoPoint>();
- 
+                        	
                         	if(nome.getText().toString().equals("")){
                         		Toast.makeText(GMapsActivity.this, "Nome Invalido",Toast.LENGTH_SHORT).show();
                         	}
@@ -239,11 +277,8 @@ public class GMapsActivity extends MapActivity {
 
 
 
-	public void telaMapa(Drawable drawable, String testePonto) {
-		
-		if (testePonto.length() == 0){
-		
-		
+	public void telaMapa(Drawable drawable) {
+
 		mapView = (MapView) findViewById(R.id.map_view);
 		mapView.getOverlays().clear();
 		mapView.invalidate();
@@ -256,15 +291,6 @@ public class GMapsActivity extends MapActivity {
 		itemizedOverlay = new AddItemizedOverlay(drawable, this, vibe);
 
 		List<Overlay> mapOverlays = mapView.getOverlays();
-
-		MapController mc = mapView.getController();
-		
-		double lat = itemizedOverlay.getLatitude();
-		double lon = itemizedOverlay.getLongitude();
-		//GeoPoint geoPoint = new GeoPoint((int) (lat * 1E6), (int) (lon * 1E6));
-//		mc.animateTo(geoPoint);
-//		mc.setZoom(15);
-		// mapView.invalidate();
 		mapView.setSatellite(true);
 		
 		
@@ -277,10 +303,7 @@ public class GMapsActivity extends MapActivity {
 		if(contMarcador<3){			
 			contMarcador += 1;
 		}
-		}
-		else {
-			Toast.makeText(GMapsActivity.this, "Ponto salvooooooooooooooo com sucesso",Toast.LENGTH_SHORT).show();
-		}
+		
 	}
 	
 	public void IniciarServico() {
@@ -326,8 +349,6 @@ public class GMapsActivity extends MapActivity {
 	}
 
 	public void Atualizar(Location location) {
-		Double latPoint = location.getLatitude();
-		Double lngPoint = location.getLongitude();
 		latitudeGPS = location.getLatitude();
 		longitudeGPS = location.getLongitude();
 		
