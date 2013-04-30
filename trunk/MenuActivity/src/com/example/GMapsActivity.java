@@ -156,8 +156,9 @@ public class GMapsActivity extends MapActivity {
 			
 			@Override
 			public void onClick(View arg0) {
-				mostrarPontos(pontosSalvos);
-				finish();
+					mostrarPontos(pontosSalvos);
+//					finish();
+				
 			}
 		});
 		
@@ -190,6 +191,7 @@ public class GMapsActivity extends MapActivity {
 	}
 	
 	private void mostrarPontos(String pontosSalvos) {
+		if (geopointsList.size() != 0){
 		String aux, aux2 = "";
 		Intent ponto = new Intent(this, PontosActivity.class);
 		if (geopointsList.size() != 0){	
@@ -203,6 +205,9 @@ public class GMapsActivity extends MapActivity {
 		this.pontosSalvos = aux2;
 		ponto.putExtra("mostrarPontos", this.pontosSalvos);
 		startActivity(ponto);
+		} else {
+			Toast.makeText(GMapsActivity.this, "Não existe pontos favoritos",Toast.LENGTH_SHORT).show();
+		}
 	}
 	
 	@Override
