@@ -98,6 +98,8 @@ public class GMapsActivity extends MapActivity {
 			}
 		});
 		
+		telaMapa(drawable);
+		
 		//Começo do ponto escolhido na outra tela
 		String string = (String) getIntent().getSerializableExtra("pontoEscolhido");
 		if (string != null){
@@ -110,28 +112,30 @@ public class GMapsActivity extends MapActivity {
 			
 			//tentativa fail =\ rodolfo
 //			Toast.makeText(GMapsActivity.this, a,Toast.LENGTH_SHORT).show();
-//			geoPoint = new GeoPoint((int)  Integer.parseInt(a),(int) Integer.parseInt(b));
+			geoPoint = new GeoPoint((int)  Integer.parseInt(a),(int) Integer.parseInt(b));
 //
-//			itemizedOverlay = new AddItemizedOverlay(drawable, this, vibe);
+			itemizedOverlay = new AddItemizedOverlay(drawable, this, vibe);
 //			
-//			mapView = (MapView) findViewById(R.id.map_view);
-//			mapView.getOverlays().clear();
-//			mapView.invalidate();
-//			mapView.setBuiltInZoomControls(true);
-//			mapView.setSatellite(true); // Satellite View
-//			mapView.setStreetView(true); // Street View
-//			mapView.setTraffic(true); // Traffic View
+			mapView = (MapView) findViewById(R.id.map_view);
+			mapView.getOverlays().clear();
+			mapView.invalidate();
+			mapView.setBuiltInZoomControls(true);
+			mapView.setSatellite(true); // Satellite View
+			mapView.setStreetView(true); // Street View
+			mapView.setTraffic(true); // Traffic View
 //
-//			List<Overlay> mapOverlays = mapView.getOverlays();
+			List<Overlay> mapOverlays = mapView.getOverlays();
 //			mapView.setSatellite(true);
 //			
-////			OverlayItem overlayitem = new OverlayItem(geoPoint, "Hello",
-////					"Sample Overlay item");
+			OverlayItem overlayitem = new OverlayItem(geoPoint, "Hello",
+					"Sample Overlay item");
 //			itemizedOverlay.addPonto(Integer.parseInt(a), Integer.parseInt(b));
-////			itemizedOverlay.addGeoPointList(geoPoint);
+			itemizedOverlay.addGeoPointList(geoPoint);
+//			overlayitem.
+			itemizedOverlay.addOverlay(overlayitem);
 //
-//			mapOverlays.add(itemizedOverlay);
-			
+			 mapView.getOverlays().add(itemizedOverlay);
+//			 mapView.getO
 			}
 		
 		}
@@ -166,7 +170,7 @@ public class GMapsActivity extends MapActivity {
 			}
 		});
 		
-		telaMapa(drawable);
+//		telaMapa(drawable);
 	}
 
 	@Override
