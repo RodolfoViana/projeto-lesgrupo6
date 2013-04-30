@@ -32,10 +32,16 @@ public class InfoCarroActivity extends Activity {
 		Button btMapButton = (Button) findViewById(R.id.carroCancelButton);
 		btMapButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+            	menu();
                 finish();
             }
         });
 		
+	}
+	
+	private void menu() {
+		Intent m = new Intent(this, EditarInfoActivity.class);
+        startActivity(m);
 	}
 	
 	private void spinner() {

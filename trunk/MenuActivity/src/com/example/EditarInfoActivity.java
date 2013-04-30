@@ -102,6 +102,7 @@ public class EditarInfoActivity extends Activity{
 		Button cancelar = (Button) findViewById(R.id.cancelarButton);
 		cancelar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+            	menu();
                 finish();
             }
         });
@@ -111,6 +112,11 @@ public class EditarInfoActivity extends Activity{
 	private void editarInfoCarro() {
 		Intent carro = new Intent(this, InfoCarroActivity.class);
         startActivity(carro);
+	}
+	
+	private void menu() {
+		Intent m = new Intent(this, MenuActivity.class);
+        startActivity(m);
 	}
 	
 	public double getDesempenho(){

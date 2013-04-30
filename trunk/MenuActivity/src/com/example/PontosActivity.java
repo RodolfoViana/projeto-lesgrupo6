@@ -96,7 +96,7 @@ public class PontosActivity extends Activity{
 //        TextView text = (TextView) findViewById(R.id.pontosSalvos);
 //        text.setText(aux2);
         
-        Button btMapButton = (Button) findViewById(R.id.voltarPontos);
+        Button btMapButton = (Button) findViewById(R.id.voltarPontosFavoritos);
 		btMapButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
             	salvarPontos(pontoEscolhido);
@@ -130,6 +130,7 @@ public class PontosActivity extends Activity{
 		pontoSalvo.putExtra("pontoEscolhido", resp);
 //		pontoSalvo.putExtra("pontoEscolhido", valuesList.get(checkedItem));
 		startActivity(pontoSalvo);
+		finish();
 	}
 
 }

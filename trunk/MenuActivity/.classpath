@@ -5,5 +5,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/Brunna_2/workspace/ProjetoLes1/xstream-1.4.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Brunna_2/android-sdks/extras/android/support/v4/android-support-v4.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
