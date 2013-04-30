@@ -3,23 +3,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fundo2"
-    android:gravity="center" >
+    android:gravity="center_horizontal" >
 
-    <Button
-        android:id="@+id/voltarPontos"
+    <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="24dp"
-        android:text="      Voltar      " />
+        android:layout_alignLeft="@+id/pontosSpinner"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="31dp"
+        android:text="Pontos marcados como favoritos."
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="28dp"
+        android:text="Clique em um para marca-lo no mapa"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Spinner
         android:id="@+id/pontosSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/voltarPontos"
-        android:layout_centerVertical="true" />
+        android:layout_above="@+id/voltarPontosFavoritos"
+        android:layout_marginBottom="61dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp" />
+
+    <Button
+        android:id="@+id/voltarPontosFavoritos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:text="      Voltar      " />
 
 </RelativeLayout>
