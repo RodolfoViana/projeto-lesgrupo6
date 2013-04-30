@@ -50,7 +50,7 @@ public class GMapsActivity extends MapActivity {
 	TextView txtLongitude;
 	String pontosSalvos = "";
 	private ArrayList<GeoPoint> geopointsList = new ArrayList<GeoPoint>();
-	HashMap<String, GeoPoint> mapa;
+	HashMap<String, GeoPoint> mapa = new HashMap<String, GeoPoint>();;
 	private EditText nome;
 //	String nome;
 	//MapController mc = mapView.getController();
@@ -190,23 +190,19 @@ public class GMapsActivity extends MapActivity {
 	}
 	
 	private void mostrarPontos(String pontosSalvos) {
-		String aux;
+		String aux, aux2 = "";
 		Intent ponto = new Intent(this, PontosActivity.class);
 		if (geopointsList.size() != 0){	
 			Iterator<String> it = mapa.keySet().iterator();
 			while(it.hasNext()){
 				aux = it.next();
-				pontosSalvos += aux + "/" + mapa.get(aux) + "\t";
+				aux2 += aux + "/" + mapa.get(aux) + "\t";
 			}
 			
 		}
-		this.pontosSalvos = pontosSalvos;
-		ponto.putExtra("mostrarPontos", pontosSalvos);
+		this.pontosSalvos = aux2;
+		ponto.putExtra("mostrarPontos", this.pontosSalvos);
 		startActivity(ponto);
-		
-//		String string = (String) getIntent().getSerializableExtra("pontoEscolhido");
-//		Toast.makeText( GMapsActivity.this, string, Toast.LENGTH_LONG).show();
-//		finish();
 	}
 	
 	@Override
@@ -258,7 +254,7 @@ public class GMapsActivity extends MapActivity {
                         public void onClick(DialogInterface dialog, int whichButton) {
                         	
                         	nome = (EditText) textEntryView.findViewById(R.id.xxx);
-                        	mapa = new HashMap<String, GeoPoint>();
+//                        	mapa = new HashMap<String, GeoPoint>();
                         	
                         	if(nome.getText().toString().equals("")){
                         		Toast.makeText(GMapsActivity.this, "Nome Invalido",Toast.LENGTH_SHORT).show();
